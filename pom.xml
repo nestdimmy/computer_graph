@@ -1,17 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-	
-    <parent>
-        <groupId>org.lwjglb</groupId>
-        <artifactId>book</artifactId>
-        <version>1.0</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
-	
-    <artifactId>game-c11-p1</artifactId>
-    <version>1.0</version>
 
+ <!--xyi-->
+    <groupId>org.lwjglb</groupId>
+    <artifactId>book</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${mvn.complilerplug.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${mvn.jarplug.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>${main.class}</mainClass>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                        <manifestEntries>
+                            <Built-By>${built.by}</Built-By>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <built.by>lwjglgamedev</built.by>
+        <main.class>org.lwjglb.game.Main</main.class>
+        <!-- Versions -->
+        <java.version>1.8</java.version>
+        <mvn.complilerplug.version>3.6.1</mvn.complilerplug.version>
+        <mvn.jarplug.version>3.0.2</mvn.jarplug.version>
+        <lwjgl.version>3.1.3</lwjgl.version>
+        <joml.version>1.9.6</joml.version>
+        <pngdecoder.version>1.0</pngdecoder.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.lwjgl</groupId>
@@ -38,28 +93,28 @@
             <artifactId>pngdecoder</artifactId>
             <version>${pngdecoder.version}</version>
         </dependency>
-		
-		<!-- Natives -->
+
+        <!-- Natives -->
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
             <version>${lwjgl.version}</version>
-            <classifier>${native.target}</classifier>
-			<scope>runtime</scope>
+            <classifier>natives-windows</classifier>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-glfw</artifactId>
             <version>${lwjgl.version}</version>
-            <classifier>${native.target}</classifier>
-			<scope>runtime</scope>
+            <classifier>natives-windows</classifier>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-opengl</artifactId>
             <version>${lwjgl.version}</version>
-            <classifier>${native.target}</classifier>
-			<scope>runtime</scope>
+            <classifier>natives-windows</classifier>
+            <scope>runtime</scope>
         </dependency>
-    </dependencies>	
+    </dependencies>
 </project>
