@@ -3,16 +3,12 @@ package org.lwjglb.game;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import static org.lwjgl.opengl.GL11.*;
 import org.lwjglb.engine.GameItem;
 import org.lwjglb.engine.Utils;
 import org.lwjglb.engine.Window;
-import org.lwjglb.engine.graph.Camera;
-import org.lwjglb.engine.graph.DirectionalLight;
-import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.PointLight;
-import org.lwjglb.engine.graph.ShaderProgram;
-import org.lwjglb.engine.graph.Transformation;
+import org.lwjglb.engine.graph.*;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class Renderer {
 
@@ -51,7 +47,7 @@ public class Renderer {
         shaderProgram.createMaterialUniform("material");
         // Create lighting related uniforms
         shaderProgram.createUniform("specularPower");
-        shaderProgram.createUniform("ambientLight");
+        //shaderProgram.createUniform("ambientLight");
         shaderProgram.createPointLightUniform("pointLight");
         shaderProgram.createDirectionalLightUniform("directionalLight");
     }
@@ -80,7 +76,7 @@ public class Renderer {
         Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
         // Update Light Uniforms
-        shaderProgram.setUniform("ambientLight", ambientLight);
+       // shaderProgram.setUniform("ambientLight", ambientLight);
         shaderProgram.setUniform("specularPower", specularPower);
         // Get a copy of the point light object and transform its position to view coordinates
         PointLight currPointLight = new PointLight(pointLight);

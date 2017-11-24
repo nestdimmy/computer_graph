@@ -61,7 +61,7 @@ public class DummyGame implements IGameLogic {
         //gameItem.setPosition(0, 0, -0.2f);
         gameItems = new GameItem[]{gameItem};
 
-        ambientLight = new Vector3f(0.3f, 0.3f, 0.3f);
+       // ambientLight = new Vector3f(0.3f, 0.3f, 0.3f);
         Vector3f lightColour = new Vector3f(1, 1, 1);
         Vector3f lightPosition = new Vector3f(0, 6, 0);
         float lightIntensity = 1.0f;
