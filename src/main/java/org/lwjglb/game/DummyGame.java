@@ -13,24 +13,19 @@ import static org.lwjgl.glfw.GLFW.*;
 public class DummyGame implements IGameLogic {
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
+    private static final float CAMERA_POS_STEP = 0.05f;
 
     private final Vector3f cameraInc;
+    private final Camera camera;
 
     private final Renderer renderer;
 
-    private final Camera camera;
-
     private GameItem[] gameItems;
 
-    private Vector3f ambientLight;
-
     private PointLight pointLight;
-
     private DirectionalLight directionalLight;
 
     private float lightAngle;
-
-    private static final float CAMERA_POS_STEP = 0.05f;
 
     public DummyGame() {
         renderer = new Renderer();
@@ -44,30 +39,22 @@ public class DummyGame implements IGameLogic {
         renderer.init(window);
 
         float reflectance = 1f;
-        //Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
-        //Material material = new Material(new Vector3f(0.2f, 0.5f, 0.5f), reflectance);
 
-        Mesh mesh = OBJLoader.loadMesh("/models/nesterov.obj");
-        Texture texture = new Texture("/textures/nesterov.png");
+        Mesh mesh = OBJLoader.loadMesh("/models/tichonov.obj");
+        Texture texture = new Texture("/textures/tih.png");
         Material material = new Material(texture, reflectance);
 
         mesh.setMaterial(material);
         GameItem gameItem = new GameItem(mesh);
-        gameItem.setScale(0.5f);
+        gameItem.setScale(1.0f);
         gameItem.setPosition(0, 0, 0);
-        //gameItem.setPosition(0, 0, -2);
-        //gameItem.setScale(0.1f);
-        //gameItem.setPosition(0, 0, -2);
-        //gameItem.setPosition(0, 0, -0.2f);
         gameItems = new GameItem[]{gameItem};
 
-       // ambientLight = new Vector3f(0.3f, 0.3f, 0.3f);
         Vector3f lightColour = new Vector3f(1, 1, 1);
-        Vector3f lightPosition = new Vector3f(0, 6, 0);
-        float lightIntensity = 1.0f;
+        Vector3f lightPosition = new Vector3f(0, 7, 0);
+        float lightIntensity = 5.0f;
         pointLight = new PointLight(lightColour, lightPosition, lightIntensity);
-        PointLight.Attenuation att = new PointLight.Attenuation(0.0f, 0.0f, 1.0f);
-        pointLight.setAttenuation(att);
+        pointLight.setAttenuation(new PointLight.Attenuation(0.0f, 0.0f, 1.0f));
 
         lightPosition = new Vector3f(-1, 0, 0);
         lightColour = new Vector3f(1, 1, 1);
@@ -75,7 +62,7 @@ public class DummyGame implements IGameLogic {
     }
 
     @Override
-    public void input(Window window, MouseInput mouseInput) {
+    public void input(Window window) {
         cameraInc.set(0, 0, 0);
         if (window.isKeyPressed(GLFW_KEY_W)) {
             cameraInc.z = -1;
@@ -129,7 +116,6 @@ public class DummyGame implements IGameLogic {
         }
 
         // Update directional light direction, intensity and colour
-
         if (lightAngle <= -80 || lightAngle >= 80) {
             float factor = 1 - (float) (Math.abs(lightAngle) - 80) / 10.0f;
             directionalLight.setIntensity(factor);
@@ -148,7 +134,7 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void render(Window window) {
-        renderer.render(window, camera, gameItems, ambientLight, pointLight, directionalLight);
+        renderer.render(window, camera, gameItems, pointLight, directionalLight);
     }
 
     @Override
@@ -158,5 +144,4 @@ public class DummyGame implements IGameLogic {
             gameItem.getMesh().cleanUp();
         }
     }
-
 }

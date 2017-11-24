@@ -56,9 +56,8 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Camera camera, GameItem[] gameItems, Vector3f ambientLight,
-        PointLight pointLight, DirectionalLight directionalLight) {
-        
+    public void render(Window window, Camera camera, GameItem[] gameItems,
+                       PointLight pointLight, DirectionalLight directionalLight) {
         clear();
 
         if ( window.isResized() ) {
@@ -76,7 +75,6 @@ public class Renderer {
         Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
         // Update Light Uniforms
-       // shaderProgram.setUniform("ambientLight", ambientLight);
         shaderProgram.setUniform("specularPower", specularPower);
         // Get a copy of the point light object and transform its position to view coordinates
         PointLight currPointLight = new PointLight(pointLight);

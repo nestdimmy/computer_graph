@@ -42,7 +42,7 @@ public class MouseInput {
         return displVec;
     }
 
-    public void input(Window window) {
+    public void input() {
         displVec.x = 0;
         displVec.y = 0;
         if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
